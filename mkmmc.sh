@@ -3,8 +3,8 @@ set -e
 OUT=/dev/null
 
 
-# max allow disk size is 9GB, change if high storage is used
-MAX_ALLOWED_DISK_SIZE=9663676416
+# max allow disk size is 16GB, change if high storage is used
+MAX_ALLOWED_DISK_SIZE=17179869184
 
 function usage()
 {
@@ -117,12 +117,15 @@ then
 	echo ""
 	echo "*** Warning! Device reports > MAX_ALLOWED_DISK_SIZE ($MAX_ALLOWED_DISK_SIZE). ***"
 	echo "  $DISKSIZE"
-	echo "Are you sure you selected the correct device? [y/n]"
-	read ans
-	if ! [[ $ans == 'y' ]]
-	then
-		exit
-	fi
+    echo "Aborting operation..if you want to continue,"
+    echo "then edit MAX_ALLOWED_DISK_SIZE manually to the script and re-run"
+    exit
+#echo "Are you sure you selected the correct device? [y/n]"
+#	read ans
+#	if ! [[ $ans == 'y' ]]
+#	then
+#		exit
+#	fi
 fi
 
 for file in $(find /sys/block/$DEVICE/device/ /sys/block/$DEVICE/ -maxdepth 1 2>/dev/null \
